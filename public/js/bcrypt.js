@@ -1,11 +1,5 @@
-// bcrypt.js
 
 const url = "http://localhost:7000"
-async function hashPassword(password) {
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-    return hashedPassword;
-}
 
 function registerUser() {
     const username = document.getElementById("username").value;
@@ -13,21 +7,19 @@ function registerUser() {
     const password = document.getElementById("password").value;
     const profileImage = document.getElementById("profileImage").files[0];
 
-    hashPassword(password)
-        .then(hashedPassword => {
-            const formData = new FormData();
-            formData.append("username", username);
-            formData.append("email", email);
-            formData.append("password", hashedPassword);
-            formData.append("profileImage", profileImage);
+    if (username) {
+        const formData = new FormData();
+        formData.append("username", username);
+        formData.append("email", email);
+        formData.append("password", password);
+        formData.append("profileImage", profileImage);
 
-            fetch(`${url}/register`, {
-                method: "POST",
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => console.log(data))
-                .catch(error => console.error("Error:", error));
+        fetch(`${url}/register`, {
+            method: "POST",
+            body: formData
         })
-        .catch(error => console.error("Error hashing password:", error));
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error("Error:", error));
+    }
 }

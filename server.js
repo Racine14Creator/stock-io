@@ -1,17 +1,15 @@
-const express = require("express");
-const multer = require("multer");
-const bcrypt = require("bcrypt");
-const path = require("path");
-const mongoose = require("mongoose");
+require('dotenv').config()
 
-const app = express();
-const port = 3000;
+const express = require("express"),
+    multer = require("multer"),
+    bcrypt = require("bcrypt"), path = require("path"), mongoose = require("mongoose");
+
+const app = express(), PORT = process.env.PORT || 3000, MONGO = process.env.MONGO
 
 // MongoDB Connection
-mongoose.connect("mongodb://localhost:27017/userdb", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+mongoose.connect(MONGO)
+    .then(_ => console.log("Connected to mongodb..."))
+    .catch(error => console.log(error))
 
 const userSchema = new mongoose.Schema({
     username: String,
@@ -44,6 +42,7 @@ app.get("/", (req, res) => {
 
 app.post("/register", upload.single("profileImage"), async (req, res) => {
     try {
+        console.log(req.body)
         const { username, email, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -62,6 +61,9 @@ app.post("/register", upload.single("profileImage"), async (req, res) => {
 });
 
 // Start Server
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+app.listen(PORT, (err) => {
+    if (err)
+        return console.log("Server cannot run")
+
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
