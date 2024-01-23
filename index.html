@@ -5,50 +5,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Registration</title>
+    <link rel="shortcut icon" href="https://avatars.githubusercontent.com/u/148460524?v=4" type="image/x-icon">
+    <link rel="stylesheet" href="./public/css/style.css">
 </head>
 
 <body>
-    <h2>User Registration</h2>
-    <form id="registrationForm" enctype="multipart/form-data" autocomplete="off">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
+    <div class="container">
+        <div class="content">
+            <div class="grid">
+                <div class="element">
+                    <div id="result">
+                        <p>Loading...</p>
+                    </div>
+                </div>
+                <div class="element">
+                    <div class="card">
+                        <h2>User Registration</h2>
+                        <form id="registrationForm" enctype="multipart/form-data" autocomplete="off">
+                            <div class="group">
+                                <label for="username">Username:</label>
+                                <input type="text" placeholder="Username" id="username" name="username" required />
+                            </div>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br>
+                            <div class="group">
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" name="email" placeholder="email@example.com"
+                                    required /><br>
+                            </div>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
+                            <div class="group">
+                                <label for="password">Password:</label>
+                                <input type="password" id="password" name="password" required placeholder="Password" />
+                            </div>
 
-        <label for="profileImage">Profile Image:</label>
-        <input type="file" id="profileImage" name="profileImage" accept="image/*" required><br>
+                            <div class="group">
+                                <label for="profileImage">Profile Image:</label>
+                                <input type="file" id="profileImage" name="profileImage" accept="image/*" required>
+                            </div>
 
-        <button type="button" onclick="registerUser()">Register</button>
-    </form>
+                            <div class="group">
+                                <button type="button" onclick="registerUser()">Register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <script>
 
         const url = "http://localhost:7000"
 
-        function registerUser() {
+        function getAll() {
+            fetch(`${url}/users`)
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                })
+                .catch(error => console.log(error))
+        }
+        getAll()
+        async function registerUser() {
             const username = document.getElementById("username").value;
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
             const profileImage = document.getElementById("profileImage").files[0];
 
-            if (username) {
+            if (username || email || password) {
+
                 const formData = new FormData();
                 formData.append("username", username);
                 formData.append("email", email);
                 formData.append("password", password);
                 formData.append("profileImage", profileImage);
 
-                fetch(`${url}/register`, {
+                await fetch(`${url}/users`, {
                     method: "POST",
                     body: formData
                 })
                     .then(response => response.json())
-                    .then(data => console.log(data))
+                    .then(data => {
+                        if (data === 'success') {
+                            formData.reset[0]
+                        } else {
+                            alert({ data })
+                        }
+                    })
                     .catch(error => console.error("Error:", error));
+            } else {
+                alert("The username is required*")
             }
 
         }

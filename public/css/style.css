@@ -1,0 +1,48 @@
+:root {
+  --bg: #0c011a;
+  --white: #fff;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--white);
+  font-family: Roboto, "sans-serif";
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100dvh;
+}
+.container .content {
+  max-width: 70%;
+  display: flex;
+}
+.container .content .group {
+  margin: 10px auto;
+}
+.container .content .card input {
+  width: 100%;
+  outline: none;
+  color: var(--white);
+  background: transparent;
+  border: 1px solid var(--white);
+  padding: 10px;
+  border-radius: 10px;
+  display: block;
+}
+.container .content .card input[file] {
+  padding: 5px;
+}/*# sourceMappingURL=style.css.map */
