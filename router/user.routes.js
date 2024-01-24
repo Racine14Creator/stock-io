@@ -15,8 +15,13 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.route('/').get(getAll).post(upload.single("profileImage"), post)
+router.route('/')
+    .get(getAll)
+    .post(upload.single("profileImage"), post)
 
-router.route('/:id').get(getOne).put(updateOne).delete(deleteOne)
+router.route('/:id')
+    .get(getOne)
+    .put(updateOne)
+    .delete(deleteOne)
 
 module.exports = router
