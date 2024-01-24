@@ -13,11 +13,10 @@ mongoose.connect(MONGO)
     .catch(error => console.log(error))
 
 
-
-
 // Express Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 // Routes

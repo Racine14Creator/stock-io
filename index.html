@@ -68,6 +68,10 @@
                         output = ''
                         data.forEach(user => {
                             output += `<div class="contentElement group cursor border p-10 border-raduis">
+                                    <div class="flex">
+                                        <span>Profile: </span>
+                                        <img src="./public/uploads/${user.profileImage}" width="32px" height="32px"/>    
+                                    </div>
                                     <p>
                                         <span>Username:</span>
                                         <span>${user.username}</span>
