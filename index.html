@@ -14,7 +14,7 @@
         <div class="content">
             <div class="grid">
                 <div class="element">
-                    <div id="result">
+                    <div id="results">
                         <p>Loading...</p>
                     </div>
                 </div>
@@ -56,14 +56,33 @@
 
     <script>
 
-        const url = "http://localhost:7000"
+        const url = "http://localhost:7000",
+            results = document.getElementById('results')
+        let output = ''
 
         function getAll() {
             fetch(`${url}/users`)
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data)
-                })
+                .then(res => res.json().then(data => {
+
+                    if (data.length > 0) {
+                        output = ''
+                        data.forEach(user => {
+                            output += `<div class="contentElement group cursor border p-10 border-raduis">
+                                    <p>
+                                        <span>Username:</span>
+                                        <span>${user.username}</span>
+                                    </p>
+                                    <p>
+                                        <span>E-mail:</span>
+                                        <span>${user.email}</span>
+                                    </p>
+                                </div>`
+                        })
+                    } else {
+                        output = `<p>No data found</p>`
+                    }
+                    results.innerHTML = output
+                }))
                 .catch(error => console.log(error))
         }
         getAll()

@@ -13,10 +13,34 @@ a {
   text-decoration: none;
 }
 
+.cursor {
+  cursor: pointer;
+}
+
+.p-10 {
+  padding: 10px;
+}
+
+.border-raduis {
+  border-radius: 10px;
+}
+
+.border {
+  border: 1px solid var(--white);
+}
+
 body {
   background-color: var(--bg);
   color: var(--white);
   font-family: Roboto, "sans-serif";
+}
+
+.contentElement p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 5px auto;
 }
 
 .container {
