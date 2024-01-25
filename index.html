@@ -63,7 +63,6 @@
         function getAll() {
             fetch(`${url}/users`)
                 .then(res => res.json().then(data => {
-
                     if (data.length > 0) {
                         output = ''
                         data.forEach(user => {
@@ -90,6 +89,7 @@
                 .catch(error => console.log(error))
         }
         getAll()
+
         async function registerUser() {
             const username = document.getElementById("username").value;
             const email = document.getElementById("email").value;
